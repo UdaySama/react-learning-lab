@@ -2,41 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, NavLink, useLocation } from "react-router-dom";
 import "./App.css";
 
-import Day1Routes from "./day-1/Day1Routes";
-import Day1App1 from "./day-1/App1";
-import Day1App2 from "./day-1/App2";
-import Day1App3 from "./day-1/App3";
-
-import Day2Routes from "./day-2/Day2Routes";
-import Day2App1 from "./day-2/App1";
-import Day2App2 from "./day-2/App2";
-import Day2App3 from "./day-2/App3";
-
-/* To add a new day: import it above, then add one object here. */
-const menuData = [
-  {
-    id: "day-1",
-    title: "Day 1",
-    path: "/day-1",
-    routesComp: <Day1Routes />,
-    apps: [
-      { name: "App 1", path: "app1", comp: <Day1App1 /> },
-      { name: "App 2", path: "app2", comp: <Day1App2 /> },
-      { name: "App 3", path: "app3", comp: <Day1App3 /> },
-    ],
-  },
-  {
-    id: "day-2",
-    title: "Day 2",
-    path: "/day-2",
-    routesComp: <Day2Routes />,
-    apps: [
-      { name: "App 1", path: "app1", comp: <Day2App1 /> },
-      { name: "App 2", path: "app2", comp: <Day2App2 /> },
-      { name: "App 3", path: "app3", comp: <Day2App3 /> },
-    ],
-  },
-];
+import menuData from "./registry";
+import DayPage from "./DayPage";
 
 const totalApps = menuData.reduce((sum, d) => sum + d.apps.length, 0);
 const isMobile = () => window.innerWidth <= 800;
@@ -50,15 +17,15 @@ export default function App() {
     () => localStorage.getItem("theme") || "light"
   );
 
-  // apply + remember theme
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // when the route changes: open the matching day, close the drawer on mobile
   useEffect(() => {
-    const current = menuData.find((d) => pathname.startsWith(d.path));
+    const current = menuData.find(
+      (d) => pathname === d.path || pathname.startsWith(d.path + "/")
+    );
     if (current) setOpenDays((prev) => ({ ...prev, [current.id]: true }));
     if (isMobile()) setSidebarOpen(false);
   }, [pathname]);
@@ -72,7 +39,6 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* ---------- NAVBAR ---------- */}
       <header className="navbar">
         <div className="navbar-left">
           <button
@@ -103,7 +69,6 @@ export default function App() {
       </header>
 
       <div className="layout-body">
-        {/* ---------- SIDEBAR ---------- */}
         {sidebarOpen && (
           <>
             <aside className="sidebar">
@@ -166,7 +131,6 @@ export default function App() {
           </>
         )}
 
-        {/* ---------- MAIN ---------- */}
         <main className="main-content">
           <Routes>
             <Route
@@ -179,9 +143,13 @@ export default function App() {
               }
             />
             {menuData.map((day) => (
-              <Route key={day.id} path={day.path} element={day.routesComp}>
+              <Route
+                key={day.id}
+                path={day.path}
+                element={<DayPage day={day} />}
+              >
                 {day.apps.map((app) => (
-                  <Route key={app.path} path={app.path} element={app.comp} />
+                  <Route key={app.path} path={app.path} element={<app.comp />} />
                 ))}
               </Route>
             ))}
@@ -198,7 +166,6 @@ export default function App() {
         </main>
       </div>
 
-      {/* ---------- FOOTER ---------- */}
       <footer className="footer">
         <p>© {new Date().getFullYear()} React Learning Tracker</p>
       </footer>
