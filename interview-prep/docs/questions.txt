@@ -1,0 +1,15 @@
+1. Q. Create a responsive template using pure CSS (flex, grid, media query) without using any library or framework!
+2.Q. How can you change CSS using JavaScript code?
+
+
+
+
+
+
+
+
+
+ReactJS
+
+1.Q. How do you manage state and props, and transfer data from a child component to a parent component?
+2.Q. How did you implement the API in your code?
