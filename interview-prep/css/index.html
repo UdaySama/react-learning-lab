@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Template</title>
+    <style>
+      :root {
+        --header-height: 60px;
+        --footer-height: 40px;
+        --sidebar-width: 250px;
+        --gap: 1rem;
+      }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        height: 100%;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: var(--sidebar-width) 1fr;
+        grid-template-rows: var(--header-height) 1fr var(--footer-height);
+        grid-template-areas:
+          "header header"
+          "sidebar main"
+          "footer footer";
+        height: 100vh;
+        gap: var(--gap);
+      }
+      header {
+        grid-area: header;
+        background: #007acc;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+        font-size: 1.5rem;
+      }
+      aside {
+        grid-area: sidebar;
+        background: #f4f4f4;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      main {
+        grid-area: main;
+        background: #fff;
+        padding: 1rem;
+        overflow-y: auto;
+      }
+      footer {
+        grid-area: footer;
+        background: #222;
+        color: #ddd;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      nav ul li {
+        margin-bottom: 0.5rem;
+      }
+      nav ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+      }
+      nav ul li a:hover {
+        color: #007acc;
+      }
+      /* Responsive adjustments */
+      @media (max-width: 900px) {
+        .container {
+          grid-template-columns: 1fr;
+          grid-template-rows: var(--header-height) auto 1fr var(--footer-height);
+          grid-template-areas:
+            "header"
+            "sidebar"
+            "main"
+            "footer";
+        }
+        aside {
+          flex-direction: row;
+          overflow-x: auto;
+        }
+        nav ul {
+          display: flex;
+          gap: 1rem;
+          white-space: nowrap;
+        }
+        nav ul li {
+          margin-bottom: 0;
+        }
+      }
+      @media (max-width: 480px) {
+        header {
+          font-size: 1.2rem;
+          padding: 0 0.5rem;
+        }
+        aside {
+          padding: 0.5rem;
+        }
+        main {
+          padding: 0.5rem;
+        }
+        footer {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>Responsive Header</header>
+      <aside>
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <main>
+        <h1>Main Content</h1>
+        <p>
+          This template adapts to different screen sizes using grid, flexbox,
+          and media queries.
+        </p>
+      </main>
+      <footer>© 2024 Responsive Template</footer>
+    </div>
+  </body>
+</html>
