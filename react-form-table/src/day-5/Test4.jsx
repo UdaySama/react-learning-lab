@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Test4() {
+  const [lisked,setLinked]=useState(false)
+
   return (
     <div>
-      Day - 5 
+      Day - 5 |  Test - 4
+     <br />
       <hr />
-      Test - 4
+      <br />
+      <button onClick={()=>setLinked(!lisked)}>
+        {lisked ? "Unlike ❤️" : "Like 🤍"}
+      </button>
     </div>
   )
 }
